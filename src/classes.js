@@ -3,21 +3,16 @@ class Project {
         this.title = title;
         this.tasks = [];
     }
-    addTask(task) {
-        this.tasks.push(task);
-        task.project = this;
-    }
 }
 
 class Note {
-    #indexInProject;
     constructor(body, project) {
         this.body = body;
         this.project = project;
-        this.#indexInProject = this.project.tasks.push(this);
+        this.indexInProject = this.project.tasks.push(this) - 1;
     }
     delete() {
-        this.project.tasks.splice(this.#indexInProject-1, 1);
+        this.project.tasks.splice(this.indexInProject, 1);
     }
 }
 
@@ -35,7 +30,7 @@ class Task extends Note {
 
 
 class ToDo extends Task {
-    constructor(body, priorityIndex, finished, project , dueDate) {
+    constructor(body, project, priorityIndex, finished , dueDate) {
         super(body, priorityIndex, finished, project);
         this.dueDate = dueDate;
         project.addTask(this);
@@ -43,10 +38,9 @@ class ToDo extends Task {
 }
 
 class Checklist extends Task {
-    constructor(body, priorityIndex, finished, project, dueDate) {
-        super(body, priorityIndex, finished, project, dueDate);
+    constructor(body, project, priorityIndex, dueDate) {
+        super(body, project, priorityIndex, dueDate);
         this.items = [];
-        this.project.addTask(this);
     }
     addItem(item) {
         this.items.push(item);
@@ -54,7 +48,7 @@ class Checklist extends Task {
     markItemFinished(item) {
         const foundItem = this.items.find(i => i === item);
         if (foundItem) {
-            foundItem.markFinished();
+            foundItem.finished = true;
         }
     }
 }
@@ -63,10 +57,20 @@ class ListItem {
         this.body = body;
         this.finished = finished;
         this.checklist = checklist;
+        this.indexInChecklist = this.checklist.items.push(this) - 1;
+    }
+    delete() {
+        this.checklist.items.splice(this.indexInChecklist, 1);
     }
 } 
 
 
-let defaultProject = new Project("Main");
-let defaultTask = new Task("Explore TODU", defaultProject, 5, false);
-let secondTask = new Task("Victim Task", defaultProject, 2, true);
+let firstProject = new Project("Main");
+
+// let firstTask = new Task("Explore TODU", firstProject, 5, false);
+// let secondTask = new Task("Make a Task", firstProject, 2, true);
+let firstChecklist = new Checklist("Checklist 1", firstProject, 1, false, "2023-10-01");
+let firstItem = new ListItem("Item 1", false, firstChecklist);
+let secondItem = new ListItem("Item 2", true, firstChecklist);
+// let Note1 = new Note("Note 1", firstProject);
+
