@@ -9,26 +9,30 @@ class Project {
     }
 }
 
-class Task {
-    constructor(body, priorityIndex, finished, project){
+class Note {
+    #indexInProject;
+    constructor(body, project) {
         this.body = body;
+        this.project = project;
+        this.#indexInProject = this.project.tasks.push(this);
+    }
+    delete() {
+        this.project.tasks.splice(this.#indexInProject-1, 1);
+    }
+}
+
+class Task extends Note {
+    constructor(body, project, priorityIndex, finished){
+        super(body, project);
         this.priorityIndex = priorityIndex;
         this.finished = finished;
-        this.project = project;
-        this.project.tasks.push(this);
     }
     markFinished() {
         this.finished = true;
     }
+    
 }
 
-class Note {
-    constructor(body, project) {
-        this.body = body;
-        this.project = project;
-        project.addTask(this);
-    }
-}
 
 class ToDo extends Task {
     constructor(body, priorityIndex, finished, project , dueDate) {
@@ -63,4 +67,6 @@ class ListItem {
 } 
 
 
-// let defaultProject = new Project("Main");
+let defaultProject = new Project("Main");
+let defaultTask = new Task("Explore TODU", defaultProject, 5, false);
+let secondTask = new Task("Victim Task", defaultProject, 2, true);
