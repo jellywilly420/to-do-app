@@ -1,3 +1,6 @@
+export {Project, Note, Task, ToDo, Checklist, ListItem, projects};
+
+let projects = [];
 class Project {
     constructor(title) {
         this.title = title;
@@ -31,9 +34,8 @@ class Task extends Note {
 
 class ToDo extends Task {
     constructor(body, project, priorityIndex, finished , dueDate) {
-        super(body, priorityIndex, finished, project);
+        super(body, project, priorityIndex, finished);
         this.dueDate = dueDate;
-        project.addTask(this);
     }
 }
 
@@ -65,12 +67,10 @@ class ListItem {
 } 
 
 
-let firstProject = new Project("Main");
+let mainProject = new Project("Main Project");
+let mainToDo = new ToDo("Explore the app!", mainProject, 1, 0, undefined);
+projects.push(mainProject);
 
-// let firstTask = new Task("Explore TODU", firstProject, 5, false);
-// let secondTask = new Task("Make a Task", firstProject, 2, true);
-let firstChecklist = new Checklist("Checklist 1", firstProject, 1, false, "2023-10-01");
-let firstItem = new ListItem("Item 1", false, firstChecklist);
-let secondItem = new ListItem("Item 2", true, firstChecklist);
-// let Note1 = new Note("Note 1", firstProject);
-
+let secondProject = new Project("Second Project");
+let secondToDo = new ToDo("Create a task!", secondProject, 1, 0, undefined);
+projects.push(secondProject);
