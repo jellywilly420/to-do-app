@@ -1,5 +1,6 @@
 import { projects } from "./classes";
 
+const projectButtonContainer = document.querySelector("#projectList");
 
 function createProjectCard(projectObj) {
     // takes in a Project obj, returns a div with the tasks in said project + edit and delete buttons
@@ -13,8 +14,35 @@ function renderProjectCard() {
     // adds the project div of the selected project to the project container
 }
 
-function createProjectButton(projectObj) {
-    // takes in project obj, returns the element for that project.
+function createProjectButtons() {
+    // returns an array of button elements for each project. uses the projects array.
+    let buttonArray = [];
+    for (let project in projects) {
+        let buttonObj = {};
+        const projectButton = document.createElement("input");
+        projectButton.type = "radio";
+        projectButton.id = `projectBtn-${project}`;
+        projectButton.setAttribute("name", "project");
+        const buttonLabel = document.createElement("label");
+        buttonLabel.setAttribute("for", `projectBtn-${project}`);
+        buttonLabel.innerText = `${projects[project].title}`;
+        if (projects[project].selected) {
+            projectButton.checked = 1;
+        }
+        buttonObj = {
+            "radio": projectButton,
+            "label": buttonLabel,
+        };
+        buttonArray.push(buttonObj);
+    }
+    return buttonArray;
+}
+
+function renderProjectButtons(buttonArray) {
+    for (let button of buttonArray) {
+        projectButtonContainer.appendChild(button["radio"]);
+        projectButtonContainer.appendChild(button["label"]);
+    }
 }
 
 function clearProjectButtons() {
@@ -22,11 +50,6 @@ function clearProjectButtons() {
     // maybe returns the index of the selected project to easily keep track?
 }
 
-function renderProjectButton(projectElem) {
-    // takes in button element
-    // adds it to the project buttons list
-    // should check if button is selected?
-}
 
 function selectProject(projectElem) {
     // starts in DOM
@@ -35,3 +58,5 @@ function selectProject(projectElem) {
     // if not, set project to selected, unselect all other projects. (both elem and obj)
 }
 
+
+export { createProjectButtons, renderProjectButtons };

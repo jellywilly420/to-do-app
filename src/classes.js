@@ -8,10 +8,14 @@ class Project {
     constructor(title) {
         this.title = title;
         this.tasks = [];
-        this.index = projects.push(this) - 1;
         
+        // would this work if an element before this one was deleted?
+        // i think the index wouldn't change after deletion, which could lead to problems.
+        this.index = projects.push(this) - 1;
+
         // needed in DOM maybe?
-        this.selected = 0;
+        this.selected;
+        projects.length == 1 ? this.selected = 1 : this.selected = 0;
     }
     // if delete is successful (project isn't the only one in projects array) return true
     // should be useful in dom?
