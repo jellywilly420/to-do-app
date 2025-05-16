@@ -1,9 +1,29 @@
-import { projects } from "./classes";
+import { projects, getObjByName, getSelectedProject } from "./classes";
 
 const projectButtonContainer = document.querySelector("#projectList");
 
-function createProjectCard(projectObj) {
+
+function createProjectCard() {
     // takes in a Project obj, returns a div with the tasks in said project + edit and delete buttons
+    // instead of taking in a parameter, just get the selected button, find its object, and use that to create the card.
+    let selectedProj = getSelectedProject();
+    const projectDiv = document.createElement("div");
+    projectDiv.id = "projectDiv";
+    const projectTitle = document.createElement("p");
+    projectTitle.id = "projectTitle";
+    const tasksContainer = document.createElement("div");
+    tasksContainer.id = "tasksContainer";
+
+    for (let task of selectedProj.tasks) {
+        const taskCard = document.createElement("div");
+        taskCard.innerText = `${task.body}`;
+        tasksContainer.appendChild(taskCard);
+    }
+
+    projectDiv.appendChild(projectTitle);
+    projectDiv.appendChild(tasksContainer);
+
+    return projectDiv
 }
 
 function clearProjectContainer() {
@@ -61,4 +81,4 @@ function selectProject(projectElem) {
 }
 
 
-export { createProjectButtons, renderProjectButtons, clearProjectButtons };
+export { createProjectButtons, renderProjectButtons, clearProjectButtons, createProjectCard };

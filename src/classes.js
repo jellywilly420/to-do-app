@@ -1,7 +1,40 @@
-export {Project, Note, Task, ToDo, Checklist, ListItem, projects, deleteProject};
+export {Project, Note, Task, ToDo, Checklist, ListItem, projects, deleteProject, getObjByName, getSelectedProject, selectProject};
 
 // array for containing projects
 let projects = [];
+
+// finds the currently selected project from the projects array
+function getSelectedProject() {
+    for (let proj of projects) {
+        if (proj.selected) {return proj}
+    }
+}
+
+function getObjByName(objName, objArray) {
+    // checks to see if the object is a project or not
+    // either uses the title prop or the body prop to search
+    if (objArray[0] instanceof Project) {
+        for (let proj of objArray) {
+            if (proj.title === objName) {
+                return proj;
+            }
+        }
+    }
+    else {
+        for (let task of objArray) {
+            if (task.body === objName) {
+                return task;
+            }
+        }
+    }
+}
+
+function selectProject(project) {
+    for (let proj of projects) {
+        proj.selected = 0;
+    }
+    project.selected = 1;
+}
 
 function deleteProject(project) {
 
@@ -36,7 +69,7 @@ class Project {
 
         // needed in DOM maybe?
         this.selected;
-        projects.length == 1 ? this.selected = 1 : this.selected = 0;
+        selectProject(this);
     }
 }
 
