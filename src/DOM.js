@@ -4,16 +4,19 @@ const projectButtonContainer = document.querySelector("#projectList");
 
 
 function createProjectCard() {
-    // takes in a Project obj, returns a div with the tasks in said project + edit and delete buttons
-    // instead of taking in a parameter, just get the selected button, find its object, and use that to create the card.
+    // finds the selected project from projects array
+    // creates an div and populates it with the title of the project
+    // makes a div for tasks inside the project
     let selectedProj = getSelectedProject();
     const projectDiv = document.createElement("div");
     projectDiv.id = "projectDiv";
     const projectTitle = document.createElement("p");
     projectTitle.id = "projectTitle";
+    projectTitle.innerText = `${selectedProj.title}`;
     const tasksContainer = document.createElement("div");
     tasksContainer.id = "tasksContainer";
-
+    
+    // task populating needs work
     for (let task of selectedProj.tasks) {
         const taskCard = document.createElement("div");
         taskCard.innerText = `${task.body}`;
