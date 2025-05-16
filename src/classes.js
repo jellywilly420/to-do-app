@@ -1,7 +1,28 @@
-export {Project, Note, Task, ToDo, Checklist, ListItem, projects};
+export {Project, Note, Task, ToDo, Checklist, ListItem, projects, deleteProject};
 
 // array for containing projects
 let projects = [];
+
+function deleteProject(project) {
+
+    // checks length of array, only deletes if it's more than 1
+    if (projects.length > 1) {
+        for (let i of projects) {
+            if (i === project) {
+                projects.splice(projects.indexOf(i), 1);
+            }
+        }
+    }
+
+    // checks if a project is selected, if not, selects the first one
+    let projectSelected = 0;
+    for (let project of projects) {
+        projectSelected = projectSelected || project.selected
+    }
+    if (!projectSelected) {
+        projects[0].selected = 1;
+    }
+}
 
 // project, has a title and an array of tasks
 class Project {
@@ -16,17 +37,6 @@ class Project {
         // needed in DOM maybe?
         this.selected;
         projects.length == 1 ? this.selected = 1 : this.selected = 0;
-    }
-    // if delete is successful (project isn't the only one in projects array) return true
-    // should be useful in dom?
-    delete() {
-        if (projects.length > 1) {
-            projects.splice(this.index, 1);
-            return 1
-        }
-        else {
-            return 0
-        }
     }
 }
 

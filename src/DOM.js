@@ -15,7 +15,8 @@ function renderProjectCard() {
 }
 
 function createProjectButtons() {
-    // returns an array of button elements for each project. uses the projects array.
+    // returns an array of objects of elements for each project. uses the projects array.
+    // each object has two properties: radio and label
     let buttonArray = [];
     for (let project in projects) {
         let buttonObj = {};
@@ -48,6 +49,7 @@ function renderProjectButtons(buttonArray) {
 function clearProjectButtons() {
     // clears the project buttons list
     // maybe returns the index of the selected project to easily keep track?
+    projectButtonContainer.innerHTML = "";
 }
 
 
@@ -59,4 +61,4 @@ function selectProject(projectElem) {
 }
 
 
-export { createProjectButtons, renderProjectButtons };
+export { createProjectButtons, renderProjectButtons, clearProjectButtons };
