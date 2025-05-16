@@ -1,48 +1,37 @@
-import { mainProject, mainToDo, projects } from "./classes";
+import { projects } from "./classes";
 
 
-
-function renderProjectLinks() {
-    const projectList = document.querySelector("#projectList");
-    projectList.innerHTML = "";
-    for (let i of projects) {
-        const listItem = document.createElement("li");
-        listItem.classList.add("list-none");
-        listItem.innerHTML = `<a class="cursor-pointer">${i.title}</a>`;
-        projectList.appendChild(listItem);
-    }
-    const projectlinks = [...document.querySelector("#projectList").children];
-    for (let i of projectlinks) {
-        if (i.classList.contains("selected")) {
-
-        }
-    }
+function createProjectCard(projectObj) {
+    // takes in a Project obj, returns a div with the tasks in said project + edit and delete buttons
 }
 
-function renderProject() {
-    const projectContainer = document.querySelector("#projectContainer");
-    const projectlinks = [...document.querySelector("#projectList").children];
+function clearProjectContainer() {
+    // deletes the contents of the project container
 }
 
-function addListeners() {
-    const projectAddBtn = document.querySelector("#addProject");
-    const projectAddConfirm = document.querySelector("#projectAddConfirm");
-    const projectAddClose = document.querySelector("#projectAddClose");
-    const projectAddDialog = document.querySelector("#projectAddDialog");
-    const projectlinks = [...document.querySelector("#projectList").children];
-
-    projectAddBtn.addEventListener("click", ()=>{projectAddDialog.showModal()});
-    projectAddConfirm.addEventListener("click", ()=>{projectAddDialog.close()})
-    projectAddClose.addEventListener("click", ()=>{projectAddDialog.close()})
-    for (let link of projectlinks) {
-        link.children[0].addEventListener("click", (e)=>{
-            for (let i of projectlinks) {
-                i.children[0].classList.remove("selected");
-            }
-            e.target.classList.add("selected");
-        })
-    }
+function renderProjectCard() {
+    // adds the project div of the selected project to the project container
 }
 
+function createProjectButton(projectObj) {
+    // takes in project obj, returns the element for that project.
+}
 
-export {renderProjectLinks, renderProject, addListeners}
+function clearProjectButtons() {
+    // clears the project buttons list
+    // maybe returns the index of the selected project to easily keep track?
+}
+
+function renderProjectButton(projectElem) {
+    // takes in button element
+    // adds it to the project buttons list
+    // should check if button is selected?
+}
+
+function selectProject(projectElem) {
+    // starts in DOM
+    // exctract project title from elem
+    // check if project is already selected, do nothing if so.
+    // if not, set project to selected, unselect all other projects. (both elem and obj)
+}
+
