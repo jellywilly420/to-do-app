@@ -29,10 +29,20 @@ function addListeners() {
     const projectAddConfirm = document.querySelector("#projectAddConfirm");
     const projectAddClose = document.querySelector("#projectAddClose");
     const projectAddDialog = document.querySelector("#projectAddDialog");
+    const projectlinks = [...document.querySelector("#projectList").children];
 
     projectAddBtn.addEventListener("click", ()=>{projectAddDialog.showModal()});
     projectAddConfirm.addEventListener("click", ()=>{projectAddDialog.close()})
     projectAddClose.addEventListener("click", ()=>{projectAddDialog.close()})
+    for (let link of projectlinks) {
+        link.children[0].addEventListener("click", (e)=>{
+            for (let i of projectlinks) {
+                i.children[0].classList.remove("selected");
+            }
+            e.target.classList.add("selected");
+        })
+    }
 }
+
 
 export {renderProjectLinks, renderProject, addListeners}
