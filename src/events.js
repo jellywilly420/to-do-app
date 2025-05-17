@@ -24,4 +24,31 @@ function addProjectButtonsEvents() {
     }
 }
 
-export {addProjectButtonsEvents};
+// - creating a project
+function addCreateProjectEvents() {
+    // get 'add project', 'confirm' and 'cancel' buttons
+    // get dialog elem
+    const addProjectDialog = document.querySelector("#projectAddDialog");
+    const addProjectButton = document.querySelector("#addProject");
+    const addConfirmButton = document.querySelector("#projectAddConfirm")
+    const addCancelButton = document.querySelector("#projectAddClose");
+
+    // add button event
+    addProjectButton.addEventListener("click", ()=>{
+        addProjectDialog.showModal();
+    })
+
+    // confirm button event
+    addConfirmButton.addEventListener("click", ()=>{
+        // stuff happens then close
+        addProjectDialog.close();
+    })
+
+    // cancel button event
+    addCancelButton.addEventListener("click", ()=>{
+        // stuff happens then close
+        addProjectDialog.close();
+    })
+}
+
+export { addProjectButtonsEvents, addCreateProjectEvents };
