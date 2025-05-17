@@ -1,4 +1,4 @@
-import { projects, getObjByName, getSelectedProject } from "./classes";
+import { projects, getObjByName, getSelectedProject, selectProject } from "./classes";
 
 const projectButtonContainer = document.querySelector("#projectList");
 const projectContainer = document.querySelector("#projectContainer");
@@ -49,10 +49,10 @@ function createProjectButtons() {
         let buttonObj = {};
         const projectButton = document.createElement("input");
         projectButton.type = "radio";
-        projectButton.id = `projectBtn-${project}`;
+        projectButton.id = `${projects[project].title}`;
         projectButton.setAttribute("name", "project");
         const buttonLabel = document.createElement("label");
-        buttonLabel.setAttribute("for", `projectBtn-${project}`);
+        buttonLabel.setAttribute("for", `${projects[project].title}`);
         buttonLabel.innerText = `${projects[project].title}`;
         if (projects[project].selected) {
             projectButton.checked = 1;
@@ -80,13 +80,22 @@ function clearProjectButtons() {
     projectButtonContainer.innerHTML = "";
 }
 
-
-function selectProject(projectElem) {
-    // starts in DOM
-    // exctract project title from elem
-    // check if project is already selected, do nothing if so.
-    // if not, set project to selected, unselect all other projects. (both elem and obj)
+// projectTitle is the id of the radio button
+function selectProjectDOM(projectTitle) {
+    // should be called by clicking a project buttons
+    // use the getObjByName to find the obj
+    // check if project is already selected
+    // select found obj
+    // find radio button for the project and select it
+    // clear project container and render it
+    const projectToSelect = getObjByName(projectTitle, projects);
+    if (projectToSelect.selected) {return}
+    selectProject(projectToSelect);
+    clearProjectButtons();
+    clearProjectContainer();
+    renderProjectButtons();
+    renderProjectCard();
 }
 
 
-export { createProjectButtons, renderProjectButtons, clearProjectButtons, createProjectCard, renderProjectCard, clearProjectContainer };
+export { createProjectButtons, renderProjectButtons, clearProjectButtons, createProjectCard, renderProjectCard, clearProjectContainer, selectProjectDOM };
