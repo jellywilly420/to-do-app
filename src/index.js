@@ -1,6 +1,6 @@
 import "./style.css";
 import { projects, Project, Note, Task, Checklist, ListItem, ToDo, deleteProject, selectProject } from "./classes";
-import { createProjectButtons, renderProjectButtons, clearProjectButtons, createProjectCard } from "./DOM";
+import { renderProjectButtons, clearProjectButtons, renderProjectCard, clearProjectContainer } from "./DOM";
 
 function initApp() {
     // console.log(projects);
@@ -8,10 +8,10 @@ function initApp() {
     const proj2 = new Project("proj2");
     const proj3 = new Project("proj3");
     const task1 = new ToDo("Explore the app1!", proj3, 1, 0, "");
-    const task2 = new ToDo("Explore the app2!", proj3, 1, 0, "");
+    const task2 = new ToDo("Explore the app2!", proj2, 1, 0, "");
     const task3 = new ToDo("Explore the app3!", proj1, 1, 0, "");
-    const test = createProjectButtons();
-    renderProjectButtons(test);
+    renderProjectButtons();
+    renderProjectCard();
 }
 
 initApp();

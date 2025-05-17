@@ -1,7 +1,7 @@
 import { projects, getObjByName, getSelectedProject } from "./classes";
 
 const projectButtonContainer = document.querySelector("#projectList");
-
+const projectContainer = document.querySelector("#projectContainer");
 
 function createProjectCard() {
     // finds the selected project from projects array
@@ -31,10 +31,14 @@ function createProjectCard() {
 
 function clearProjectContainer() {
     // deletes the contents of the project container
+    projectContainer.innerHTML = "";
 }
 
 function renderProjectCard() {
     // adds the project div of the selected project to the project container
+    // the div is available using createProjectCard()
+    const projectCard = createProjectCard();
+    projectContainer.appendChild(projectCard);
 }
 
 function createProjectButtons() {
@@ -62,7 +66,8 @@ function createProjectButtons() {
     return buttonArray;
 }
 
-function renderProjectButtons(buttonArray) {
+function renderProjectButtons() {
+    const buttonArray = createProjectButtons();
     for (let button of buttonArray) {
         projectButtonContainer.appendChild(button["radio"]);
         projectButtonContainer.appendChild(button["label"]);
@@ -84,4 +89,4 @@ function selectProject(projectElem) {
 }
 
 
-export { createProjectButtons, renderProjectButtons, clearProjectButtons, createProjectCard };
+export { createProjectButtons, renderProjectButtons, clearProjectButtons, createProjectCard, renderProjectCard, clearProjectContainer };
