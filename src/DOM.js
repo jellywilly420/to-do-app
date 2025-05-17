@@ -1,4 +1,5 @@
 import { projects, getObjByName, getSelectedProject, selectProject } from "./classes";
+import { addProjectButtonsEvents } from "./events";
 
 const projectButtonContainer = document.querySelector("#projectList");
 const projectContainer = document.querySelector("#projectContainer");
@@ -72,6 +73,8 @@ function renderProjectButtons() {
         projectButtonContainer.appendChild(button["radio"]);
         projectButtonContainer.appendChild(button["label"]);
     }
+    // add listeners after adding the buttons to the DOM
+    addProjectButtonsEvents();
 }
 
 function clearProjectButtons() {
@@ -98,4 +101,4 @@ function selectProjectDOM(projectTitle) {
 }
 
 
-export { createProjectButtons, renderProjectButtons, clearProjectButtons, createProjectCard, renderProjectCard, clearProjectContainer, selectProjectDOM };
+export { createProjectButtons, renderProjectButtons, clearProjectButtons, createProjectCard, renderProjectCard, clearProjectContainer, selectProjectDOM, projectButtonContainer };

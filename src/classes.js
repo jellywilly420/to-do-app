@@ -15,9 +15,7 @@ function getObjByName(objName, objArray) {
     // either uses the title prop or the body prop to search
     // may or may not need the task compatibility
     if (objArray[0] instanceof Project) {
-        console.log(objName);
         for (let proj of objArray) {
-            console.log(proj.title);
             if (proj.title === objName) {
                 return proj;
             }
