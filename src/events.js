@@ -31,8 +31,10 @@ function addProjectButtonsEvents() {
                     const projObj = getObjByName(projName, projects);
                     // only allow deletion if projects[] has more than one project
                     if (projects.length > 1) {
-                        // delete it?                        
-                        deleteProject(projObj)
+                        if (confirm(`Are you sure you want to delete ${projName}?\nThis will delete all the tasks within it!`)){
+                            // delete it?                        
+                            deleteProject(projObj);
+                        }
                     }
                     else {
                         alert("You can't delete your only project!");

@@ -44,7 +44,7 @@ function renderProjectCard() {
 
 function createProjectButtons() {
     // returns an array of divs containing elements elements for each project. uses the projects array.
-    // each object has two properties: radio and label
+    // each div has 3 elements: radio and label and button
     let buttonArray = [];
     for (let project in projects) {
         const buttonDiv = document.createElement("div");
@@ -88,10 +88,9 @@ function clearProjectButtons() {
 // projectTitle is the id of the radio button
 function selectProjectDOM(projectTitle) {
     // should be called by clicking a project buttons
-    // use the getObjByName to find the obj
+    // getObjByName to find the obj
     // check if project is already selected
     // select found obj
-    // find radio button for the project and select it
     // clear project container and render it
     const projectToSelect = getObjByName(projectTitle, projects);
     if (projectToSelect.selected) {return}
