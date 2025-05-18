@@ -1,5 +1,5 @@
 import { createProjectButtons, renderProjectButtons, clearProjectButtons, createProjectCard, renderProjectCard, clearProjectContainer, selectProjectDOM, projectButtonContainer } from "./DOM";
-import { getObjByName, projects, selectProject } from "./classes";
+import { Project, projects } from "./classes";
 // for all the dom events
 
 
@@ -28,10 +28,12 @@ function addProjectButtonsEvents() {
 function addCreateProjectEvents() {
     // get 'add project', 'confirm' and 'cancel' buttons
     // get dialog elem
+    // get 'project name' input elem
     const addProjectDialog = document.querySelector("#projectAddDialog");
     const addProjectButton = document.querySelector("#addProject");
     const addConfirmButton = document.querySelector("#projectAddConfirm")
     const addCancelButton = document.querySelector("#projectAddClose");
+    const projNameInput = document.querySelector("#projectName");
 
     // add button event
     addProjectButton.addEventListener("click", ()=>{
@@ -41,12 +43,38 @@ function addCreateProjectEvents() {
     // confirm button event
     addConfirmButton.addEventListener("click", ()=>{
         // stuff happens then close
-        addProjectDialog.close();
+        // - check if a project already exists with the same name
+        // - alert if so
+        const projName = projNameInput.value;
+        let projNameExists = false;
+        for (let proj of projects) {
+            // sets the boolean to true if an existing project matches names with the inputted name
+            projNameExists = projNameExists || (proj.title === projName);
+        }
+        // input validation
+        if (projName === "") {
+            alert("Please enter the project name!");
+        }
+        else if (projNameExists) {
+            alert("Project name already exists!");
+        }
+        else {
+            // create a new project
+            // render button (automatically selected)
+            const newProj = new Project(projName);
+            clearProjectButtons();
+            renderProjectButtons();
+            clearProjectContainer();
+            renderProjectCard();
+            addProjectDialog.value = "";
+            addProjectDialog.close();
+        }
     })
 
     // cancel button event
     addCancelButton.addEventListener("click", ()=>{
         // stuff happens then close
+        projNameInput.value = "";
         addProjectDialog.close();
     })
 }
