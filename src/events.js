@@ -2,6 +2,20 @@ import { createProjectButtons, renderProjectButtons, clearProjectButtons, create
 import { Project, projects, getObjByName, deleteProject } from "./classes";
 // for all the dom events
 
+// add project dialog
+const addProjectDialog = document.querySelector("#projectAddDialog");
+const addConfirmButton = document.querySelector("#projectAddConfirm")
+const addCancelButton = document.querySelector("#projectAddClose");
+const projNameInputAdd = document.querySelector("#projectNameAdd");
+
+// edit project dialog
+const projectEditDialog = document.querySelector("#projectEditDialog");
+const editConfirmButton = document.querySelector("#projectEditConfirm");
+const editCancelButton = document.querySelector("#projectEditClose");
+const projNameInputEdit = document.querySelector("#projectNameEdit");
+
+// used to keep track of old project before editing projects
+let currentProjObj;
 
 // - project buttons
 function addProjectButtonsEvents() {
@@ -41,48 +55,75 @@ function addProjectButtonsEvents() {
                         return;
                     }
                     // need a rerender
-                    // really need to combine all these into a rendring function man :/
-                    clearProjectButtons();
-                    clearProjectContainer();
                     renderProjectButtons();
                     renderProjectCard();
                 })
             }
-        }
+            // EDITING PROJECTS!!!
+            else if (child.tagName === "BUTTON" && child.id.split("-")[0] === "edit") {
 
+                // editProject events
+                child.addEventListener("click", (e)=>{
+                    // open the edit project dialog
+                    projectEditDialog.showModal();
+                    // get current project name
+                    const oldName = e.target.id.split("-")[1];
+                    // get obj of current project
+                    currentProjObj = getObjByName(oldName, projects);
+                    // fill input with current project name
+                    projNameInputEdit.value = oldName;
+                    // select input value
+                    projNameInputEdit.select();
+                })
+            }
+        }
     }
 }
 
 // - creating a project
 function addCreateProjectEvents() {
-    // get 'add project', 'confirm' and 'cancel' buttons
-    // get dialog elem
-    // get 'project name' input elem
-    const addProjectDialog = document.querySelector("#projectAddDialog");
+    // addProject stuff
     const addProjectButton = document.querySelector("#addProject");
-    const addConfirmButton = document.querySelector("#projectAddConfirm")
-    const addCancelButton = document.querySelector("#projectAddClose");
-    const projNameInput = document.querySelector("#projectName");
 
-    // make pressing enter click the confirm button
+    // add button event
+    addProjectButton.addEventListener("click", ()=>{
+        addProjectDialog.showModal();
+    })
+}
+
+function addDialogEvents() {
+    // keyboard event shortcuts
     addProjectDialog.addEventListener("keydown", (e)=>{
         if (e.key === "Enter") {
             e.preventDefault();
             addConfirmButton.click();
         }
     })
-
-    // add button event
-    addProjectButton.addEventListener("click", ()=>{
-        addProjectDialog.showModal();
+    projectEditDialog.addEventListener("keydown", (e)=>{
+        if (e.key === "Enter") {
+            e.preventDefault();
+            editConfirmButton.click();
+        }
+    })
+    addProjectDialog.addEventListener("keydown", (e)=>{
+        if (e.key === "Escape") {
+            e.preventDefault();
+            addCancelButton.click();
+        }
+    })
+    projectEditDialog.addEventListener("keydown", (e)=>{
+        if (e.key === "Escape") {
+            e.preventDefault();
+            editCancelButton.click();
+        }
     })
 
-    // confirm button event
+    // add project confirm button event
     addConfirmButton.addEventListener("click", ()=>{
         // stuff happens then close
         // - check if a project already exists with the same name
         // - alert if so
-        const projName = projNameInput.value;
+        const projName = projNameInputAdd.value;
         let projNameExists = false;
         for (let proj of projects) {
             // sets the boolean to true if an existing project matches names with the inputted name
@@ -91,29 +132,70 @@ function addCreateProjectEvents() {
         // input validation
         if (projName === "") {
             alert("Please enter the project name!");
+            projNameInputAdd.focus();
         }
         else if (projNameExists) {
             alert("Project name already exists!");
+            projNameInputAdd.focus();
         }
         else {
             // create a new project
             // render button (automatically selected)
             const newProj = new Project(projName);
-            clearProjectButtons();
             renderProjectButtons();
-            clearProjectContainer();
             renderProjectCard();
-            projNameInput.value = "";
+            projNameInputAdd.value = "";
             addProjectDialog.close();
         }
     })
 
-    // cancel button event
+    // add project cancel button event
     addCancelButton.addEventListener("click", ()=>{
         // stuff happens then close
-        projNameInput.value = "";
+        projNameInputAdd.value = "";
         addProjectDialog.close();
+    })
+
+    // edit project cancel button even
+    editCancelButton.addEventListener("click", ()=>{
+        // stuff happens then close
+        projNameInputEdit.value = "";
+        projectEditDialog.close();
+    })
+
+    // edit project confirm button event listener
+    editConfirmButton.addEventListener("click",()=>{
+        // get new proj name
+        const newName = projNameInputEdit.value;
+        // check if name already exists
+        let projNameExists = false;
+        for (let proj of projects) {
+            // sets the boolean to true if an existing project matches names with the inputted name
+            projNameExists = projNameExists || (proj.title === newName);
+        }
+
+        // if input is empty
+        if (newName === "") {
+            alert("Please enter the new project name!");
+            projNameInputEdit.focus();
+        }
+        // if name already exists
+        else if (projNameExists) {
+            alert("Project name already exists!");
+            projNameInputEdit.focus();
+        }
+        else {
+            // change obj title to new name
+            currentProjObj.title = newName;
+            // clear input field
+            projNameInputEdit.value = "";
+            // close dialog 
+            projectEditDialog.close();
+            // rerender
+            renderProjectCard();
+            renderProjectButtons();
+        }
     })
 }
 
-export { addProjectButtonsEvents, addCreateProjectEvents };
+export { addProjectButtonsEvents, addCreateProjectEvents, addDialogEvents };

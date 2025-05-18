@@ -36,6 +36,7 @@ function clearProjectContainer() {
 }
 
 function renderProjectCard() {
+    clearProjectContainer();
     // adds the project div of the selected project to the project container
     // the div is available using createProjectCard()
     const projectCard = createProjectCard();
@@ -47,8 +48,10 @@ function createProjectButtons() {
     // each div has 3 elements: radio and label and button
     let buttonArray = [];
     for (let project in projects) {
+        // div creation
         const buttonDiv = document.createElement("div");
         buttonDiv.classList.add("projectButtonDiv");
+        // button and label creation
         const projectButton = document.createElement("input");
         projectButton.type = "radio";
         projectButton.id = `${projects[project].title}`;
@@ -56,14 +59,21 @@ function createProjectButtons() {
         const buttonLabel = document.createElement("label");
         buttonLabel.setAttribute("for", `${projects[project].title}`);
         buttonLabel.innerText = `${projects[project].title}`;
+        // delete button creation
         const deleteProjectButton = document.createElement("button");
-        deleteProjectButton.id = `delete-${projects[project].title}`
+        deleteProjectButton.id = `delete-${projects[project].title}`;
         deleteProjectButton.innerText = "del";
+        // edit button creation
+        const editProjectButton = document.createElement("button");
+        editProjectButton.classList.add("edit-project-button");
+        editProjectButton.id = `edit-${projects[project].title}`;
+        editProjectButton.innerText = "edit";
         if (projects[project].selected) {
             projectButton.checked = 1;
         }
         buttonDiv.appendChild(projectButton);
         buttonDiv.appendChild(buttonLabel);
+        buttonDiv.appendChild(editProjectButton);
         buttonDiv.appendChild(deleteProjectButton);
         buttonArray.push(buttonDiv);
     }
@@ -71,6 +81,7 @@ function createProjectButtons() {
 }
 
 function renderProjectButtons() {
+    clearProjectButtons();
     const buttonArray = createProjectButtons();
     for (let buttonDiv of buttonArray) {
         projectButtonContainer.appendChild(buttonDiv);
@@ -95,8 +106,6 @@ function selectProjectDOM(projectTitle) {
     const projectToSelect = getObjByName(projectTitle, projects);
     if (projectToSelect.selected) {return}
     selectProject(projectToSelect);
-    clearProjectButtons();
-    clearProjectContainer();
     renderProjectButtons();
     renderProjectCard();
 }

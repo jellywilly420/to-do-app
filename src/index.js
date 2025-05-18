@@ -1,7 +1,7 @@
 import "./style.css";
 import { projects, Project, Note, Task, Checklist, ListItem, ToDo, deleteProject, selectProject } from "./classes";
 import { renderProjectButtons, clearProjectButtons, renderProjectCard, clearProjectContainer, selectProjectDOM } from "./DOM";
-import { addProjectButtonsEvents, addCreateProjectEvents } from "./events";
+import { addProjectButtonsEvents, addCreateProjectEvents, addDialogEvents } from "./events";
 
 function initApp() {
     // console.log(projects);
@@ -16,6 +16,7 @@ function initApp() {
 
     // addProjectButtonsEvents();
     addCreateProjectEvents();
+    addDialogEvents();
 }
 
 initApp();
