@@ -56,11 +56,15 @@ function createProjectButtons() {
         const buttonLabel = document.createElement("label");
         buttonLabel.setAttribute("for", `${projects[project].title}`);
         buttonLabel.innerText = `${projects[project].title}`;
+        const deleteProjectButton = document.createElement("button");
+        deleteProjectButton.id = `delete-${projects[project].title}`
+        deleteProjectButton.innerText = "del";
         if (projects[project].selected) {
             projectButton.checked = 1;
         }
         buttonDiv.appendChild(projectButton);
         buttonDiv.appendChild(buttonLabel);
+        buttonDiv.appendChild(deleteProjectButton);
         buttonArray.push(buttonDiv);
     }
     return buttonArray;
