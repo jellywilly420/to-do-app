@@ -62,6 +62,14 @@ function addCreateProjectEvents() {
     const addCancelButton = document.querySelector("#projectAddClose");
     const projNameInput = document.querySelector("#projectName");
 
+    // make pressing enter click the confirm button
+    addProjectDialog.addEventListener("keydown", (e)=>{
+        if (e.key === "Enter") {
+            e.preventDefault();
+            addConfirmButton.click();
+        }
+    })
+
     // add button event
     addProjectButton.addEventListener("click", ()=>{
         addProjectDialog.showModal();
