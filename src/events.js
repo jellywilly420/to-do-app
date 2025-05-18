@@ -5,20 +5,21 @@ import { Project, projects } from "./classes";
 
 // - selecting projects
 function addProjectButtonsEvents() {
-    // add listeners to all children of button container
-    for (let node of [...projectButtonContainer.children]) {
-        // filter nodes to only add listeners to the inputs
-        // the labels being clicked triggers a click on inputs anyway
-        if (node.tagName === "INPUT") {
-                node.addEventListener("click", (e)=>{
-                // on click
-                // extract project title from event target
-                // get the object equivilant of the title
-                // if it's selected, return
-                // if not, selectProjectDOM that mf
-                const projTitle = e.target.id; 
-                selectProjectDOM(projTitle);
-            })
+    // get an array of divs for each project buttons
+    const buttonDivArr = [...document.querySelectorAll('.projectButtonDiv')];
+    // iterate over divs, then iterate over children of each div
+    for (let div of buttonDivArr) {
+        for (let child of [...div.children]) {
+            // only add event listener to input type children
+            if (child.tagName === "INPUT") {
+                    child.addEventListener("click", (e)=>{
+                    // extract project title from event target id
+                    // select that mf
+                    const projTitle = e.target.id; 
+                    // the function checks to see if proj is already selected so all gucci!
+                    selectProjectDOM(projTitle);
+                })
+            }
         }
 
     }
@@ -66,7 +67,7 @@ function addCreateProjectEvents() {
             renderProjectButtons();
             clearProjectContainer();
             renderProjectCard();
-            addProjectDialog.value = "";
+            projNameInput.value = "";
             addProjectDialog.close();
         }
     })

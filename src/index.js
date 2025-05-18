@@ -14,7 +14,7 @@ function initApp() {
     renderProjectButtons();
     renderProjectCard();
 
-    addProjectButtonsEvents();
+    // addProjectButtonsEvents();
     addCreateProjectEvents();
 }
 

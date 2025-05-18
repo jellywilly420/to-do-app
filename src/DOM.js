@@ -43,11 +43,12 @@ function renderProjectCard() {
 }
 
 function createProjectButtons() {
-    // returns an array of objects of elements for each project. uses the projects array.
+    // returns an array of divs containing elements elements for each project. uses the projects array.
     // each object has two properties: radio and label
     let buttonArray = [];
     for (let project in projects) {
-        let buttonObj = {};
+        const buttonDiv = document.createElement("div");
+        buttonDiv.classList.add("projectButtonDiv");
         const projectButton = document.createElement("input");
         projectButton.type = "radio";
         projectButton.id = `${projects[project].title}`;
@@ -58,20 +59,17 @@ function createProjectButtons() {
         if (projects[project].selected) {
             projectButton.checked = 1;
         }
-        buttonObj = {
-            "radio": projectButton,
-            "label": buttonLabel,
-        };
-        buttonArray.push(buttonObj);
+        buttonDiv.appendChild(projectButton);
+        buttonDiv.appendChild(buttonLabel);
+        buttonArray.push(buttonDiv);
     }
     return buttonArray;
 }
 
 function renderProjectButtons() {
     const buttonArray = createProjectButtons();
-    for (let button of buttonArray) {
-        projectButtonContainer.appendChild(button["radio"]);
-        projectButtonContainer.appendChild(button["label"]);
+    for (let buttonDiv of buttonArray) {
+        projectButtonContainer.appendChild(buttonDiv);
     }
     // add listeners after adding the buttons to the DOM
     addProjectButtonsEvents();
