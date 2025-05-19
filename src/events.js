@@ -14,6 +14,19 @@ const editConfirmButton = document.querySelector("#projectEditConfirm");
 const editCancelButton = document.querySelector("#projectEditClose");
 const projNameInputEdit = document.querySelector("#projectNameEdit");
 
+// select task type dialog (when adding task)
+const selectTaskTypeDialog = document.querySelector("#selectTaskTypeDialog"); 
+const selectTaskTypeConfirm = document.querySelector("#selectTaskTypeConfirm");
+const selectTaskTypeClose = document.querySelector("#selectTaskTypeClose");
+let selectTaskTypeRadios = [...document.querySelectorAll(`#taskTypeButtons > div > input[type = 'radio']`)];
+
+// add note dialog
+const noteAddDialog = document.querySelector("#noteAddDialog");
+
+// add todo dialog
+
+// add checklist dialog
+
 // used to keep track of old project before editing projects
 let currentProjObj;
 
@@ -196,6 +209,39 @@ function addDialogEvents() {
             renderProjectButtons();
         }
     })
+
+    // select task type
+        // confirm button
+    selectTaskTypeConfirm.addEventListener("click", ()=>{
+        // save checked task type
+        const taskType = document.querySelector(`#taskTypeButtons > div > input[type = 'radio']:checked`).id.split("-")[0];
+        // close dialog
+        selectTaskTypeDialog.close();
+        // go back to default of 'note' being checked
+        selectTaskTypeRadios[0].checked = 1;
+        // open dialog for adding the selected task type
+        if (taskType === 'note') {noteAddDialog.showModal();}
+        else if (taskType === 'todo') { /**todoAddDialog.showModal();*/}
+        else {/**checklistAddDialog.showModal();*/}
+    })
 }
 
-export { addProjectButtonsEvents, addCreateProjectEvents, addDialogEvents };
+// project card events
+function addProjectCardEvents() {
+    // add task event
+        // get elem for add button
+    const addTaskButton = document.querySelector(".addTaskButton");
+        // keep track of what project it belongs to
+    const parentProjectTitle = addTaskButton.id.split("-")[1];
+    const parentProjectObj = getObjByName(parentProjectTitle, projects);
+        // click event 
+        // open 'select task type' dialog
+    addTaskButton.addEventListener("click", ()=>{
+        selectTaskTypeDialog.showModal();
+    }) 
+
+    // edit task event
+    // delete task event
+}
+
+export { addProjectButtonsEvents, addCreateProjectEvents, addDialogEvents, addProjectCardEvents };

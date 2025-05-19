@@ -1,5 +1,5 @@
 import { projects, getObjByName, getSelectedProject, selectProject } from "./classes";
-import { addProjectButtonsEvents } from "./events";
+import { addProjectButtonsEvents, addProjectCardEvents } from "./events";
 
 const projectButtonContainer = document.querySelector("#projectList");
 const projectContainer = document.querySelector("#projectContainer");
@@ -9,11 +9,19 @@ function createProjectCard() {
     // creates an div and populates it with the title of the project
     // makes a div for tasks inside the project
     let selectedProj = getSelectedProject();
+    // project div
     const projectDiv = document.createElement("div");
     projectDiv.id = "projectDiv";
+    // project title
     const projectTitle = document.createElement("p");
     projectTitle.id = "projectTitle";
     projectTitle.innerText = `${selectedProj.title}`;
+    // add task button
+    const addTaskButton = document.createElement("button");
+    addTaskButton.id = `addTaskTo-${selectedProj.title}`;
+    addTaskButton.classList.add("addTaskButton");
+    addTaskButton.innerText = "Add a task";
+    // task container
     const tasksContainer = document.createElement("div");
     tasksContainer.id = "tasksContainer";
     
@@ -25,6 +33,7 @@ function createProjectCard() {
     }
 
     projectDiv.appendChild(projectTitle);
+    projectDiv.appendChild(addTaskButton);
     projectDiv.appendChild(tasksContainer);
 
     return projectDiv
@@ -41,6 +50,7 @@ function renderProjectCard() {
     // the div is available using createProjectCard()
     const projectCard = createProjectCard();
     projectContainer.appendChild(projectCard);
+    addProjectCardEvents();
 }
 
 function createProjectButtons() {
